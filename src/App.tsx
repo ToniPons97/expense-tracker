@@ -1,12 +1,20 @@
-import { useState } from 'react'
+import Form from './components/Form'
 import './App.css'
+import { useState } from 'react'
+import { Expense } from './entities';
+
+
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const [expenses, setExpenses] = useState<Expense[]>([]);
+
+
 
   return (
     <div className="App">
-
+      <h1>Expense tracker</h1>
+      <Form />
     </div>
   )
 }
