@@ -1,5 +1,8 @@
+export type Category = '' | 'Groceries' | 'Utilities' | 'Entertainment';
+
 export interface Expense {
     description: string;
     amount: number;
-    category: 'Groceries' | 'Utilities' | 'Entertainment';
+    price: number;
+    category: Category;
 }
