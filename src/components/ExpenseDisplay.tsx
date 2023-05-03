@@ -1,4 +1,4 @@
-import { ChangeEvent, ReactNode } from "react";
+import { ChangeEvent, ReactNode, useEffect } from "react";
 import { Expense } from "../entities";
 
 interface Props {
@@ -8,10 +8,21 @@ interface Props {
 }
 
 const ExpenseDisplay = ({ expenses, onDelete, onFilter }: Props) => {
-
     const handleChange = (ev: ChangeEvent<HTMLSelectElement>) => {
         if (ev.target)
             onFilter(ev.target.value);
+    }
+
+    const calculateTotalAmount = (expenses: Expense[]) => {
+        let total = 0;
+        expenses.forEach(e => total += e.amount);
+        return total;
+    }
+
+    const calculateTotalPrice = (expenses: Expense[]) => {
+        let total = 0;
+        expenses.forEach(e => total += e.price);
+        return total;
     }
 
     return (
@@ -59,8 +70,10 @@ const ExpenseDisplay = ({ expenses, onDelete, onFilter }: Props) => {
                     <tfoot>
                         <tr>
                             <th>Total</th>
-                            <td></td>
-                            <td>${400}</td>
+                            <td>
+                                {calculateTotalAmount(expenses)}
+                            </td>
+                            <td>${calculateTotalPrice(expenses)}</td>
                             <td></td>
                             <td></td>
                         </tr>
