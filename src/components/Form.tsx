@@ -9,9 +9,9 @@ interface Props {
 }
 
 const formSchema = z.object({
-    description: z.string().nonempty('Item description is required.'),
-    amount: z.number({ invalid_type_error: 'Only positive numbers allowed.' })
-        .min(1, { message: 'The minimum amount required is 1.' }),
+    description: z.string({invalid_type_error: 'Item description is required.'})
+        .min(3, { message: 'Description must be at least 3 characters long.' }),
+    amount: z.number().min(1, { message: 'The minimum amount required is 1.' }),
     category: z.string().nonempty('Category is required.')
 
 });
@@ -31,7 +31,7 @@ const Form = ({ onSubmit }: Props) => {
         handleSubmit,
         reset,
         formState: { errors, isSubmitSuccessful },
-    } = useForm<FormData>({ 
+    } = useForm<FormData>({
         resolver: zodResolver(formSchema),
         defaultValues: {
             description: '',
@@ -78,7 +78,6 @@ const Form = ({ onSubmit }: Props) => {
                     price: setPrice(value) * expense.amount
                 });
             } else if (id === 'amount' && typeof Number(value) === 'number') {
-                console.log(value);
                 setExpense({
                     ...expense,
                     [id]: Number(value),
@@ -120,6 +119,7 @@ const Form = ({ onSubmit }: Props) => {
                         id='amount'
                         className="form-control"
                         placeholder='amount'
+                        autoComplete='off'
                     />
                     <label htmlFor="description">Amount</label>
                     {errors.amount && <p className='text-danger'>{errors.amount.message}</p>}
