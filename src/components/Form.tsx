@@ -30,7 +30,7 @@ const Form = ({ onSubmit }: Props) => {
         register,
         handleSubmit,
         reset,
-        formState: { errors, isSubmitSuccessful }
+        formState: { errors, isSubmitSuccessful },
     } = useForm<FormData>({ 
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -53,10 +53,6 @@ const Form = ({ onSubmit }: Props) => {
                 return 1;
         }
     }
-
-    useEffect(() => {
-        console.log(expense);
-    }, [expense]);
 
     useEffect(() => {
         // It's recommended to reset in useEffect as execution order matters
@@ -142,9 +138,7 @@ const Form = ({ onSubmit }: Props) => {
                     <option>Entertainment</option>
                 </select>
                 {errors.category && <p className='text-danger'>{errors.category.message}</p>}
-
                 <button className='btn btn-primary mt-3' type='submit' role='button'>Submit</button>
-                <button onClick={() => console.log(expense)} className='btn btn-secondary'>Debug</button>
             </form>
         </div>
     )
