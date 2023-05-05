@@ -1,4 +1,4 @@
-import { ChangeEvent, ReactNode, useEffect } from "react";
+import { ChangeEvent } from "react";
 import { Expense } from "../entities";
 
 interface Props {
@@ -61,7 +61,12 @@ const ExpenseDisplay = ({ expenses, onDelete, onFilter }: Props) => {
                                         <td>${e.price}</td>
                                         <td>{e.category}</td>
                                         <td>
-                                            <button onClick={() => onDelete(i)} className="btn btn-outline-danger">Delete</button>
+                                            <button
+                                                onClick={() => onDelete(i)}
+                                                className="btn btn-outline-danger"
+                                            >
+                                                Delete
+                                            </button>
                                         </td>
                                     </tr>
                                 )

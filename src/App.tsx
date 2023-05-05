@@ -4,12 +4,9 @@ import { useEffect, useState } from 'react'
 import { Expense } from './entities';
 import ExpenseDisplay from './components/ExpenseDisplay';
 
-
-
-function App() {
+const App = () => {
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const [expensesCopy, setExpensesCopy] = useState<Expense[]>([]);
-  
   
   const handleSubmit = (expense: Expense) => {
     setExpenses([...expenses, expense]);
@@ -20,11 +17,8 @@ function App() {
     setExpenses(expenses.filter(e => e != expenses[id]));
     setExpensesCopy(expenses.filter(e => e != expenses[id]));
   }
-
-  
   
   const onFilterCategory = (category: string) => {
-
     if (expensesCopy.length < expenses.length)
       setExpensesCopy(prev => [...expenses, ...prev]);
 
@@ -47,4 +41,4 @@ function App() {
   )
 }
 
-export default App
+export default App;

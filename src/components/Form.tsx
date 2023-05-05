@@ -1,6 +1,6 @@
-import { ChangeEvent, useEffect, useState } from 'react';
-import { Expense, Category } from '../entities';
-import { useForm } from 'react-hook-form';
+import { useEffect } from 'react';
+import { Expense } from '../entities';
+import { useForm, FieldValues } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -19,13 +19,6 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>;
 
 const Form = ({ onSubmit }: Props) => {
-    const [expense, setExpense] = useState<Expense>({
-        description: '',
-        amount: 0,
-        price: 1,
-        category: '',
-    });
-
     const {
         register,
         handleSubmit,
@@ -66,41 +59,22 @@ const Form = ({ onSubmit }: Props) => {
 
     }, [isSubmitSuccessful]);
 
-    const handleInput = (ev: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        if (ev.target) {
-            const { id, value } = ev.target;
-
-            if (id === 'category') {
-                let category = id as Category;
-                setExpense({
-                    ...expense,
-                    [category]: value,
-                    price: setPrice(value) * expense.amount
-                });
-            } else if (id === 'amount' && typeof Number(value) === 'number') {
-                setExpense({
-                    ...expense,
-                    [id]: Number(value),
-                    price: Number(value) * setPrice(expense.category)
-                });
-            } else {
-                setExpense({
-                    ...expense,
-                    [id]: id === 'amount' || id === 'price' ? Number(value) : value
-                });
-            }
+    const onSubmitHandle = (data: FieldValues) => {
+        const expense: Expense = {
+            description: data.description,
+            amount: data.amount,
+            category: data.category,
+            price: data.amount * setPrice(data.category) 
         }
-    }
-
-    const onSubmitHandle = () => onSubmit(expense);
+        onSubmit(expense);
+    };
 
     return (
         <div className='d-flex flex-column'>
             <form onSubmit={handleSubmit(onSubmitHandle)} className='mt-5' >
                 <div className="form-floating mb-3">
                     <input
-                        {...register('description', { required: true, minLength: 1 })}
-                        onChange={handleInput}
+                        {...register('description', { required: true, minLength: 3 })}
                         id='description'
                         type="text"
                         className="form-control"
@@ -115,7 +89,6 @@ const Form = ({ onSubmit }: Props) => {
                     <input
                         type='number'
                         {...register('amount', { required: true, valueAsNumber: true })}
-                        onChange={handleInput}
                         id='amount'
                         className="form-control"
                         placeholder='amount'
@@ -130,7 +103,6 @@ const Form = ({ onSubmit }: Props) => {
                     className="form-select"
                     aria-label="Category selection."
                     {...register('category', { required: true })}
-                    onChange={handleInput}
                 >
                     <option></option>
                     <option>Groceries</option>
