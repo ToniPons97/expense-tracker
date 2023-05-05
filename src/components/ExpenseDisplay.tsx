@@ -27,6 +27,7 @@ const ExpenseDisplay = ({ expenses, onDelete, onFilter }: Props) => {
 
     return (
         <div className='mt-3'>
+            <h2>Expenses</h2>
             <select
                 onChange={handleChange}
                 id='category'

@@ -21,10 +21,6 @@ function App() {
     setExpensesCopy(expenses.filter(e => e != expenses[id]));
   }
 
-  useEffect(() => {
-    console.log(expenses);
-    console.log(expensesCopy);
-  }, [expenses]);
   
   
   const onFilterCategory = (category: string) => {
