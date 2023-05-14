@@ -9,7 +9,7 @@ interface Props {
 }
 
 const formSchema = z.object({
-    description: z.string({invalid_type_error: 'Item description is required.'})
+    description: z.string({ invalid_type_error: 'Item description is required.' })
         .min(3, { message: 'Description must be at least 3 characters long.' }),
     amount: z.number().min(1, { message: 'The minimum amount required is 1.' }),
     category: z.string().nonempty('Category is required.')
@@ -56,7 +56,6 @@ const Form = ({ onSubmit }: Props) => {
                 category: '',
             });
         }
-
     }, [isSubmitSuccessful]);
 
     const onSubmitHandle = (data: FieldValues) => {

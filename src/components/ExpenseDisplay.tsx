@@ -13,18 +13,6 @@ const ExpenseDisplay = ({ expenses, onDelete, onFilter }: Props) => {
             onFilter(ev.target.value);
     }
 
-    const calculateTotalAmount = (expenses: Expense[]) => {
-        let total = 0;
-        expenses.forEach(e => total += e.amount);
-        return total;
-    }
-
-    const calculateTotalPrice = (expenses: Expense[]) => {
-        let total = 0;
-        expenses.forEach(e => total += e.price);
-        return total;
-    }
-
     return (
         <div className='mt-3'>
             <h2>Expenses</h2>
@@ -77,9 +65,9 @@ const ExpenseDisplay = ({ expenses, onDelete, onFilter }: Props) => {
                         <tr>
                             <th>Total</th>
                             <td>
-                                {calculateTotalAmount(expenses)}
+                                {expenses.reduce((acc, expense) => acc + expense.amount, 0)}
                             </td>
-                            <td>${calculateTotalPrice(expenses)}</td>
+                            <td>${expenses.reduce((acc, expense) => acc + expense.price, 0)}</td>
                             <td></td>
                             <td></td>
                         </tr>
